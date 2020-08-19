@@ -26,15 +26,15 @@ dataFeaturesNames <- read.table(file.path(path_rf, "features.txt"),head=FALSE)
 names(dataFeatures)<- dataFeaturesNames$V2
 
 # bind all data together to form a single data set
-
-TidyData <- cbind(dataFeatures, cbind(dataSubject, dataActivity))
+d<-cbind(dataSubject, dataActivity)
+TidyData <- cbind(d,dataFeatures)
 str(TidyData)
 
 ## STEP 3 Extract only the measurements on the mean and standard deviation for each measurement
 
 subdataFeaturesNames<-dataFeaturesNames$V2[grep("mean\\(\\)|std\\(\\)", dataFeaturesNames$V2)]
 #subset data
-selectedNames<-c(as.character(subdataFeaturesNames), "subject", "activity" )
+selectedNames<-c("subject", "activity", as.character(subdataFeaturesNames) )
 TidyData<-subset(TidyData,select=selectedNames)
 str(TidyData)
 
